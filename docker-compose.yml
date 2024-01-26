@@ -1,0 +1,34 @@
+services:
+  ai_project_db:
+    image: postgres:13
+    restart: always
+    container_name: ai_project_db
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - PGDATA=/var/lib/postgresql/data
+    user: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      # - ai_project_db:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  ai_project_api:
+    restart: always
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    container_name: ai_project_api
+    user: root
+    volumes:
+      - ./api:/api
+      # - ./ssl:/ssl
+    entrypoint: watchmedo auto-restart --recursive --pattern="*.py" --directory="." python ai_project_api.py
+    ports:
+      - '5000:5000'
+    depends_on:
+      - voice_control_db
+volumes:
+  voice_control_db:
+    driver: local
