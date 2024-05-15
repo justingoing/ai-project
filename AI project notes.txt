@@ -1,0 +1,4 @@
+plot the data on a cartesian plane - scatter plot
+see if data has a normal distribution - draw an ellipse over 10 of the points - ellipse in EDA
+what does normal distribution mean and what is it?
+run a PCA principal component analysis on the data (pca might be a little more challenging because its unsupervised)

@@ -21,8 +21,8 @@ import statsmodels.api as sm
 
 
 server = FastAPI(
-    title='Voice Control API',
-    description='Provide data to the Voice Control App'
+    title='AI Project API',
+    description='Provide data to the app'
 )
 
 server.add_middleware(
@@ -36,13 +36,12 @@ server.add_middleware(
 
 DB_USER = "postgres"
 DB_PASSWORD = "123"
-DB_HOST = "voice_control_db"
+DB_HOST = "ai_project_db"
 DB_PORT = "5432"
 DB_NAME = "postgres"
 
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 engine = create_engine(DATABASE_URL)
-
 
 def fetch_data_from_database():
     sql = """SELECT * FROM users;"""
@@ -50,7 +49,6 @@ def fetch_data_from_database():
     df = pd.read_sql(sql, engine)
 
     return df
-
 
 @server.get("/", description="Root", summary="Hello World")
 def read_root():
@@ -61,8 +59,7 @@ def get_users():
     df = fetch_data_from_database()
     return df.to_dict(orient="records")
 
-
 if __name__ == "__main__":
 
-    uvicorn.run("voice_control_api:server", host="0.0.0.0",
+    uvicorn.run("api:server", host="0.0.0.0",
                 port=5000, log_level="info", reload=True)

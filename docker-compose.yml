@@ -17,18 +17,30 @@ services:
   ai_project_api:
     restart: always
     build:
-      context: .
+      context: ./api
       dockerfile: api.Dockerfile
     container_name: ai_project_api
     user: root
     volumes:
       - ./api:/api
       # - ./ssl:/ssl
-    entrypoint: watchmedo auto-restart --recursive --pattern="*.py" --directory="." python ai_project_api.py
+    entrypoint: watchmedo auto-restart --recursive --pattern="*.py" --directory="." python api.py
     ports:
       - '5000:5000'
     depends_on:
-      - voice_control_db
+      - ai_project_db
+  neo4j:
+    image: neo4j:latest
+    environment:
+      NEO4J_AUTH: neo4j/neo4jpass
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - $HOME/neo4j/data:/data
+      - $HOME/neo4j/logs:/logs
+      - $HOME/neo4j/import:/var/lib/neo4j/import
+      - $HOME/neo4j/plugins:/plugins
 volumes:
-  voice_control_db:
+  ai_project_db:
     driver: local
