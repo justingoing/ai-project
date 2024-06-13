@@ -17,7 +17,7 @@ services:
   ai_project_api:
     restart: always
     build:
-      context: ./api
+      context: .
       dockerfile: api.Dockerfile
     container_name: ai_project_api
     user: root

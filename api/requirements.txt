@@ -9,3 +9,7 @@ psycopg2
 watchdog[watchmedo]
 plotly
 statsmodels
+matplotlib
+folium
+scikit-learn
+numpy
