@@ -1,70 +1,3 @@
-# from typing import Any, List
-
-# import numpy as np
-# from fastapi import FastAPI, HTTPException, Body, Query, Request
-# from fastapi.middleware.cors import CORSMiddleware
-# from fastapi.responses import HTMLResponse
-# import os
-# import uvicorn
-# import logging
-# from pydantic import BaseModel, Field
-# from sqlalchemy import create_engine
-# import pandas as pd
-# from typing import Dict, List, Optional, Union
-# import json
-# import ssl
-# import plotly.express as px
-# import plotly.graph_objs as go
-# from plotly.subplots import make_subplots
-# from statsmodels.formula.api import ols
-# import statsmodels.api as sm
-
-
-# server = FastAPI(
-#     title='AI Project API',
-#     description='Provide data to the app'
-# )
-
-# server.add_middleware(
-#     CORSMiddleware,
-#     # allow_origins=["https://www.csu-hci-experiment.online"],
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
-# DB_USER = "postgres"
-# DB_PASSWORD = "123"
-# DB_HOST = "ai_project_db"
-# DB_PORT = "5432"
-# DB_NAME = "postgres"
-
-# DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-# engine = create_engine(DATABASE_URL)
-
-# def fetch_data_from_database():
-#     sql = """SELECT * FROM users;"""
-
-#     df = pd.read_sql(sql, engine)
-
-#     return df
-
-# @server.get("/", description="Root", summary="Hello World")
-# def read_root():
-#     return {"hello": "world"}
-
-# @server.get("/users", description="Get all users", summary="Get all users")
-# def get_users():
-#     df = fetch_data_from_database()
-#     return df.to_dict(orient="records")
-
-# if __name__ == "__main__":
-
-#     uvicorn.run("api:server", host="0.0.0.0",
-#                 port=5000, log_level="info", reload=True)
-
-
 from typing import Any, List
 import pandas as pd
 from fastapi import FastAPI
@@ -75,9 +8,11 @@ import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import uvicorn
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
 # Load the data
-data = pd.read_csv('./data/mahopac-city.csv')
+data = pd.read_csv('../data/mahopac-city.csv')
 
 # Ensure that the 'City' column is treated as a categorical variable
 data['City'] = data['City'].astype('category')
